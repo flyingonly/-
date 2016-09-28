@@ -7,10 +7,14 @@ html,
 body {
     height: 100%;
     width: 100%;
+    
 }
 
 canvas {
     display: block;
-    width: 300;
-    height: 300;
+    width: 600px;
+    height: 600px;
+    margin-top: 10px;
+    margin-left: 100px;
+    background-color: black;
 }
