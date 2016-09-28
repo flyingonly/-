@@ -63,7 +63,9 @@ describe('地图初始化', function() {
         assert.equal(mymap.map.length, mymap.size);
     });
     it('地图应有合适的宽度', function() {
-        assert.equal(mymap.map[Math.floor(mymap.size / 2)].length, mymap.size);
+        for(var j = 0; j < mymap.size; j++){
+            assert.equal(mymap.map[j].length, mymap.size);
+        }
     });
 });
 
@@ -74,6 +76,10 @@ describe('地图随机生成', function() {
         mymap.rand();
     });
     it('细胞应有生存或死亡状态', function() {
-        chai.expect(mymap.map[Math.floor(mymap.size / 2)][Math.floor(mymap.size / 2)].live).to.be.within(0,1)
+        for(var i = 0; i < mymap.size; i++){
+            for(var j = 0; j < mymap.size; j++){
+                chai.expect(mymap.map[i][j].live).to.be.within(0,1)
+            }
+        }
     });
 });
