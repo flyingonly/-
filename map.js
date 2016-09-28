@@ -82,7 +82,7 @@ var Cell = {
     }
 };
 
-var mymap = Mymap.createNew(50);
+var mymap = Mymap.createNew(100);
 var runflag = false;
 var inter;
 
