@@ -7,7 +7,34 @@ html,
 body {
     height: 100%;
     width: 100%;
-    
+    background-color: red;
+}
+
+#ti {
+    position: absolute;
+    top: 50px;
+    left: 40px;
+    width: 20px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+#perc {
+    position: absolute;
+    top: 60px;
+    left: 500px;
+    height: 350px;
+    width: 550px;
+}
+
+#zhedang{
+    position: absolute;
+    top: 60px;
+    left: 750px;
+    height: 550px;
+    width: 550px;
+    background-color: red;
+    z-index: -1;
 }
 
 canvas {
@@ -17,4 +44,19 @@ canvas {
     margin-top: 10px;
     margin-left: 100px;
     background-color: black;
+}
+
+#sttext {
+    position: absolute;
+    left: 12px;
+    top: 420px;
+}
+#rstext {
+    position: absolute;
+    left: 12px;
+    top: 500px;
+}
+
+img {
+    display: block;
 }

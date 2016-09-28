@@ -2,14 +2,27 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
     <title>Game of Life</title>
     <link rel="stylesheet" type="text/css" href="map.css">
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="map.js"></script>
+    <link rel="stylesheet" type="text/css" href="./dist/css/bootstrap.min.css">
+    <script type="text/javascript" src="./dist/js/bootstrap.min.js"></script>
 </head>
 
 <body>
+    <div id="ti">这一切都是命运石之门的选择</div>
     <canvas id="mycanvas" width="600" height="600"></canvas>
+    <label for="st" id="sttext" class="btn" >
+        <img src="13.jpeg" width="50" height="70">
+    </label>
+    <input style="display:none" type="button" onclick="start()" id="st">
+    <label for="rs" id="rstext" class="btn">
+        <img src="12.jpeg" width="50" height="70">
+    </label>
+    <input style="display:none" type="button" onclick="reset()" id="rs">
+
 </body>
 
 </html>

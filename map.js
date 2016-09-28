@@ -1,24 +1,24 @@
 var Mymap = {
-    createNew: function() {
+    createNew: function(mysize) {
         var mymap = {};
         var i = 0;
         var j = 0;
-        mymap.size = 200;
+        mymap.size = mysize;
         mymap.map = new Array();
         mymap.init = function() {
             for (i = 0; i < mymap.size; i++) {
                 mymap.map[i] = new Array()
                 for (j = 0; j < mymap.size; j++) {
-                    mymap.map[i][j] = Cell.createNew(mymap,i,j);
+                    mymap.map[i][j] = Cell.createNew(mymap, i, j);
                 }
             }
         }
-        mymap.rand = function () {
+        mymap.rand = function() {
             for (i = 0; i < mymap.size; i++) {
                 for (j = 0; j < mymap.size; j++) {
                     if (Math.random() > 0.5) {
                         mymap.map[i][j].live = 1;
-                    }else {
+                    } else {
                         mymap.map[i][j].live = 0;
                     }
                 }
@@ -29,12 +29,12 @@ var Mymap = {
                 return;
             }
             var ctx = $("#mycanvas")[0].getContext("2d");
-            ctx.clearRect(0,0,600,600)
+            ctx.clearRect(0, 0, 600, 600)
             for (i = 0; i < mymap.size; i++) {
                 for (j = 0; j < mymap.size; j++) {
                     if (mymap.map[i][j].live) {
                         ctx.beginPath();
-                        ctx.arc(i * (550 / mymap.size) + 25,j * (550 / mymap.size) + 25, (200 / mymap.size), 0, Math.PI * 2, true);
+                        ctx.arc(i * (550 / mymap.size) + 25 + (200 / mymap.size), j * (550 / mymap.size) + 25 + (200 / mymap.size), (200 / mymap.size), 0, Math.PI * 2, true);
                         ctx.closePath();
                         ctx.fillStyle = 'rgba(255, 0, 0, 0.75)';
                         ctx.fill();
@@ -42,7 +42,7 @@ var Mymap = {
                 }
             }
         }
-        mymap.update = function () {
+        mymap.update = function() {
             for (i = 0; i < mymap.size; i++) {
                 for (j = 0; j < mymap.size; j++) {
                     mymap.map[i][j].proc();
@@ -59,28 +59,21 @@ var Mymap = {
 };
 
 var Cell = {
-    createNew: function(mymap,i,j) {
+    createNew: function(mymap, i, j) {
         var cell = {};
         cell.x = i;
         cell.y = j;
         cell.live = 0;
         cell.futurelive = 0;
         cell.themap = mymap;
-        cell.proc = function () {
-            sum = mymap.map[(i + mymap.size -1) % mymap.size][(j + mymap.size -1) % mymap.size].live
-            + mymap.map[(i + mymap.size -1) % mymap.size][j].live
-            + mymap.map[(i + mymap.size -1) % mymap.size][(j + 1) % mymap.size].live
-            + mymap.map[i][(j + mymap.size -1) % mymap.size].live
-            + mymap.map[i][(j + 1) % mymap.size].live
-            + mymap.map[(i + 1) % mymap.size][(j + mymap.size -1) % mymap.size].live
-            + mymap.map[(i + 1) % mymap.size][j].live
-            + mymap.map[(i + 1) % mymap.size][(j + 1) % mymap.size].live
+        cell.proc = function() {
+            sum = mymap.map[(i + mymap.size - 1) % mymap.size][(j + mymap.size - 1) % mymap.size].live + mymap.map[(i + mymap.size - 1) % mymap.size][j].live + mymap.map[(i + mymap.size - 1) % mymap.size][(j + 1) % mymap.size].live + mymap.map[i][(j + mymap.size - 1) % mymap.size].live + mymap.map[i][(j + 1) % mymap.size].live + mymap.map[(i + 1) % mymap.size][(j + mymap.size - 1) % mymap.size].live + mymap.map[(i + 1) % mymap.size][j].live + mymap.map[(i + 1) % mymap.size][(j + 1) % mymap.size].live
             if (sum == 3) {
                 cell.futurelive = 1;
-            }else {
+            } else {
                 if (sum == 2) {
                     cell.futurelive = cell.live;
-                }else{
+                } else {
                     cell.futurelive = 0;
                 }
             }
@@ -89,13 +82,36 @@ var Cell = {
     }
 };
 
-var mymap = Mymap.createNew();
+var mymap = Mymap.createNew(50);
+var runflag = false;
+var inter;
 
-$(function() {
+$(function () {
     mymap.init();
     mymap.rand();
-    window.setInterval(function () {
-        mymap.update();
-        mymap.drawpic();
-    },100)
-});
+    mymap.drawpic();
+})
+
+function start() {
+    if (runflag) {
+        $("#sttext")[0].innerHTML = "<img src=\"13.jpeg\" width=\"50\" height=\"70\">";
+        clearInterval(inter);
+        runflag = false;
+    } else {
+        $("#sttext")[0].innerHTML = "<img src=\"14.jpeg\" width=\"50\" height=\"70\">";
+        inter = window.setInterval(function() {
+            mymap.update();
+            mymap.drawpic();
+        }, 100)
+        runflag = true;
+    }
+}
+
+function reset () {
+    $("#sttext")[0].innerHTML = "<img src=\"13.jpeg\" width=\"50\" height=\"70\">";
+        clearInterval(inter);
+    runflag = false;
+    mymap.init();
+    mymap.rand();
+    mymap.drawpic();
+}
